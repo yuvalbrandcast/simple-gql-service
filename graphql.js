@@ -24,10 +24,23 @@ const books = [
 
 const resolvers = {
     Query: {
-        books: () => books,
+        books: (_, args, ctx, info) => {
+            console.log(ctx.functionName);
+
+            return books;
+        },
     },
 };
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: ({ event, context }) => ({
+        headers: event.headers,
+        functionName: context.functionName,
+        event,
+        context,
+    }),
+});
 
 exports.graphqlHandler = server.createHandler();
