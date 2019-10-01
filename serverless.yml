@@ -1,6 +1,6 @@
 # serverless.yml
 
-service: apollo-lambda
+service: simple-gql-service
 provider:
     name: aws
     runtime: nodejs8.10

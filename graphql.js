@@ -25,7 +25,7 @@ const books = [
 const resolvers = {
     Query: {
         books: (_, args, ctx, info) => {
-            console.log(ctx.functionName);
+            console.log('LOGGGGGGG function:', ctx.functionName);
 
             return books;
         },
@@ -33,7 +33,6 @@ const resolvers = {
 };
 
 const server = new ApolloServer({
-    introspection: true,
     typeDefs,
     resolvers,
     context: ({ event, context }) => ({
@@ -42,11 +41,13 @@ const server = new ApolloServer({
         event,
         context,
     }),
+    introspection: true,
+    playground: true,
 });
 
 exports.graphqlHandler = server.createHandler({
     cors: {
-        origin: true,
+        origin: '*',
         credentials: true,
     },
 });
